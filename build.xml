@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="jar" name="Create Runnable Jar for Project Sarcophagus">
+	
+	<property name="distdir" value="${basedir}/dist/" />
+	<property name="libdir" value="${basedir}/lib" />
+	
+    <path id="jar.classpath">
+		<pathelement location="${libdir}/sarcophagus.jar"/>
+		<pathelement location="${libdir}/core.jar"/>
+		<pathelement location="${libdir}/jmc.jar"/>
+		<pathelement location="${libdir}/jmcvideo.jar"/>
+		<pathelement location="${libdir}/jmcServerDaemon"/>
+		<pathelement location="${libdir}/libCoreVideoSupport.jnilib"/>
+	</path>
+	
+	<target name="jar" depends="application_jar">
+	   
+	</target>
+	
+    <target name="sarcophagus_jar">
+        <mkdir dir="${distdir}"/>
+    	<echo message="build sarcophagus jar in ${distdir}"/>
+        <jar destfile="${distdir}/sarcophagus.jar">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Main-Class" value="com.etoy.processing.sarcophagus.SarcophagusPlayer"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+        
+        	<fileset dir="${basedir}/bin"/>
+        </jar>
+    </target>
+	
+	<target name="application_jar" depends="sarcophagus_jar">
+		<mkdir dir="${distdir}"/>
+		
+		<pathconvert property="jar.classpath.str" pathsep=" ">
+		    <path refid="jar.classpath"/>
+			<flattenmapper/>
+		</pathconvert>
+		
+	    <jar destfile="${distdir}/sarcophagus-app.jar">
+	    	<manifest>
+	    	    <attribute name="Built-By" value="${user.name}"/>
+	    		<attribute name="Main-Class" value="com.etoy.processing.sarcophagus.SarcophagusPlayer"/>
+	    	    <attribute name="Class-Path" value="${jar.classpath.str}"/>
+	    	</manifest>
+	    	
+	    	<zipfileset excludes="META-INF/*.SF" src="${distdir}/sarcophagus.jar"/>
+	    	<zipfileset excludes="META-INF/*.SF" src="${basedir}/core.jar"/>
+	    	<zipfileset excludes="META-INF/*.SF" src="${basedir}/jmcvideo.jar"/>
+	    	<zipfileset excludes="META-INF/*.SF" src="${basedir}/jmc.jar"/>
+	    	<fileset dir="${basedir}">
+	        	  <include name="jmcServerDaemon"/>
+	        	  <include name="libCoreVideoSupport.jnilib"/>
+	        </fileset>
+	    </jar>
+    </target>
+</project>
