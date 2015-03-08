@@ -47,9 +47,9 @@
 	    	</manifest>
 	    	
 	    	<zipfileset excludes="META-INF/*.SF" src="${distdir}/sarcophagus.jar"/>
-	    	<zipfileset excludes="META-INF/*.SF" src="${basedir}/core.jar"/>
-	    	<zipfileset excludes="META-INF/*.SF" src="${basedir}/jmcvideo.jar"/>
-	    	<zipfileset excludes="META-INF/*.SF" src="${basedir}/jmc.jar"/>
+	    	<zipfileset excludes="META-INF/*.SF" src="${libdir}/core.jar"/>
+	    	<zipfileset excludes="META-INF/*.SF" src="${libdir}/jmcvideo.jar"/>
+	    	<zipfileset excludes="META-INF/*.SF" src="${libdir}/jmc.jar"/>
 	    	<fileset dir="${basedir}">
 	        	  <include name="jmcServerDaemon"/>
 	        	  <include name="libCoreVideoSupport.jnilib"/>
